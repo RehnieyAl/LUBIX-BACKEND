@@ -1,10 +1,17 @@
 from fastapi import APIRouter
 from app.utils.testDatabase import db_test
-
+from app.utils.check_internet import check_internet_connection
 router = APIRouter(
     prefix=("/health"),
     tags=["health"]
 )
-@router.get("/test")
+@router.get("/database")
 def healthDatabase():
     return db_test()
+
+@router.get("/internet")
+def healthInternet():
+    if check_internet_connection():
+        return {"message": "Conexión a Internet exitosa"}
+    else:
+        return {"message": "No se pudo establecer conexión a Internet"}

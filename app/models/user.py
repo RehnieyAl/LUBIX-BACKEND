@@ -37,6 +37,11 @@ class Users(Base):
     tell: Mapped[str] = mapped_column(
         String(50), nullable=False
     )
+    verified: Mapped[bool] = mapped_column(
+        Boolean,
+        default=False
+    )
+
     isActive: Mapped[bool] = mapped_column(
         Boolean, 
         default=True, 

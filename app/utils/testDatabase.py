@@ -1,7 +1,7 @@
 from sqlalchemy import text
 from app.database.connection import engine
 
-## Testeo de conexion de base de datos
+## Testeo de conexion de base de datos al backend
 def db_test():
     try:
         with engine.connect() as connection:

@@ -1,6 +1,7 @@
 from pydantic import BaseModel, EmailStr
 from app.models.user import RoleType
 
+    
 class createUser(BaseModel):
     fullName: str
     email: EmailStr
@@ -8,6 +9,11 @@ class createUser(BaseModel):
     role: RoleType = RoleType.user
     tell: str
     isActive: bool = True
+    verified: bool = False
+
+class verifyEmail(BaseModel):
+    email: EmailStr
+    code: str
 
 class userLogin(BaseModel):
     email: EmailStr

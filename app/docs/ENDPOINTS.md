@@ -14,13 +14,19 @@ POST user/register
   "tell": "",
   "hashed_password": ""
 }
-
 -- login 
-POST user/singIn
+POST user/login
 {
   "email": "",
   "password": ""
 }
+
+-- forgot password
+POST user/forgot-password
+{
+  "email": ""
+}
+
 -- reset password
 POST user/reset-password
 {

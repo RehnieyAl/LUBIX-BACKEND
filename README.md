@@ -4,9 +4,9 @@ Backend con base de datos para el proyecto Lubix, desarrollado por **Yeinher Alg
 
 ## Descripción
 Este proyecto sirve como backend para Lubix, implementando operaciones CRUD y conexión con base de datos PostgreSQL.  
-Se implementa autenticación y gestión de datos utilizando FastAPI y SQLAlchemy.
+Se implementa autenticación y gestión de datos utilizando FastAPI, SQLAlchemy, STMP con gmail.
 
-version alpha V0.1
+Initial version V1.0
 
 ## Tecnologías y Herramientas
 
@@ -19,6 +19,9 @@ version alpha V0.1
 | SQLAlchemy | ORM (Object Relational Mapping) para manejar la base de datos |
 | PostgreSQL 18.3 | Base de datos relacional |
 | psycopg2-binary | Driver para conexión con PostgreSQL |
+| Pydantic | Validación de datos y esquemas |
+| python-jose | Manejo de autenticación y creacion de tokens JWT |
+| bcrypt | Encriptacion de contraseña |
 | python-dotenv | Leer variables de entorno desde archivos `.env` |
 
 ## Estructura de Carpetas
@@ -28,22 +31,17 @@ LUBIX-BACKEND/
 │
 ├─ app/
 │  ├─ main.py             # Entrada principal de la aplicación FastAPI
-│  ├─ database/
-|  |  └─ connection.py    # Configuracion de la base de datos
-│  ├─ docs/
-|  |  └─ ENDPOINTS.md     # documentacion de endpoints
-|  ├─ models/
-|  |  ├─__init__.py       # Iniciar modelos
-|  |  ├─company.py        # Define la tabla empresa
-|  |  └─ user.py          # Define la tabla usuario
+│  ├─ database/           # conexion de base de datos hacia postgre SQL
+|  |
+│  ├─ docs/               # Documentacion
+|  |
+|  ├─ models/             # Modelos de tablas para la base de datos
+|  |
 │  ├─ routers/            # Carpeta con routers de endpoints
-│  |   └─ user.py         # routers usuario
-│  ├─ schemas/            # Estructura de entrada y salida de datos en la api
-|  |  ├─company.py        
-|  |  └─user.py           
-|  └─ utils/
-|     ├─ testDatabase.py  # Prueba de conexion de base de datos
-|     └─ jwt.py           # JSON WEB TOKEN (generar tokens ) no implementado todavia...
+│  |   
+│  ├─ schemas/            # Estructura de entrada y salida de datos en la api      
+|  |        
+|  └─ utils/              # Utilidades como STMP, generador de codigos
 ├─ .env                   # Variables de entorno
 ├─ requirements.txt       # Dependencias del proyecto
 ├─ README.md              # Documentación del proyecto

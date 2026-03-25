@@ -9,7 +9,7 @@ class typeCode(str, typerEnum):
     verifyEmail = "verifyEmail",
 
 class Codes(Base):
-    __tablename__ = "codes"
+    __tablename__ = "event_codes"
     id: Mapped[int] = mapped_column(
         primary_key=True, 
         autoincrement=True

@@ -87,6 +87,7 @@ Sigue estos pasos para configurar el proyecto en tu máquina local:
     ACCESS_TOKEN_EXPIRE_MINUTES=30
     GMAIL_USERNAME = "tucorreo@gmail.com"
     GMAIL_APP_PASSWORD = "tu_clave_app_gmail"
+    URL_FRONTEND = "tu_urlfrotend"
     ```
 6. **Iniciar servidor backend afuera de la carpeta app**
     ```bash

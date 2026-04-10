@@ -9,4 +9,5 @@ class config():
     ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES"))
     GMAIL_USERNAME = os.getenv("GMAIL_USERNAME")
     GMAIL_APP_PASSWORD = os.getenv("GMAIL_APP_PASSWORD")
+    URL_FRONTEND = os.getenv("URL_FRONTEND")
 config = config()

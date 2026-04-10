@@ -3,6 +3,8 @@ from sqlalchemy.orm import relationship, Mapped, mapped_column
 from datetime import datetime, timedelta
 from app.database.connection import Base
 from enum import Enum as typerEnum
+from sqlalchemy.dialects.postgresql import UUID
+import uuid
 
 class typeCode(str, typerEnum):
     resetPassword = "resetPassword",
@@ -10,9 +12,9 @@ class typeCode(str, typerEnum):
 
 class Codes(Base):
     __tablename__ = "event_codes"
-    id: Mapped[int] = mapped_column(
+    id: Mapped[uuid.UUID] = mapped_column(
         primary_key=True, 
-        autoincrement=True
+        default=uuid.uuid4
     )
 
     code: Mapped[str] = mapped_column(
@@ -31,7 +33,7 @@ class Codes(Base):
         DateTime,
         default=lambda: datetime.utcnow() + timedelta(minutes=15)
     )
-    user_id: Mapped[int] = mapped_column(
+    user_id: Mapped[uuid.UUID] = mapped_column(
         ForeignKey("users.id")
     )
     user: Mapped["Users"] = relationship(

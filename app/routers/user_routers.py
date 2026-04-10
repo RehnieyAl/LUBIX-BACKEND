@@ -1,11 +1,11 @@
 from fastapi import APIRouter,Depends
-from app.services.service_user import register_user_service, verify_email_service, login_user_service, forgot_password_service, reset_password_service
+from app.services.service_user import register_user_service, verify_email_service, login_user_service, forgot_password_service, reset_password_service, logout_user_service
 from sqlalchemy.orm import Session
 from app.database.connection import get_db
-from app.schemas.user import createUser, verifyEmail, userLogin, forgotPassword, ResetPassword
+from app.schemas.user import createUser, verifyEmail, userLogin, forgotPassword, ResetPassword, AddToken, DeleteToken
 
 router = APIRouter(
-    prefix=("/user"),
+    prefix=("/user"),   
     tags=["User"]
 )
 
@@ -34,4 +34,9 @@ def forgot_password(user: forgotPassword, database: Session = Depends(get_db)):
 @router.post("/reset-password")
 def reset_password(user: ResetPassword, database: Session = Depends(get_db)):
     result = reset_password_service(user, database)
+    return result
+
+@router.post("/logout")
+def logout_user(delete: DeleteToken, database: Session = Depends(get_db)):
+    result = logout_user_service(delete, database)
     return result

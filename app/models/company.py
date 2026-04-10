@@ -3,6 +3,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.dialects.postgresql import UUID
 import uuid
 from app.database.connection import Base
+
 class Company(Base):
     __tablename__ = "company"
     id: Mapped[uuid.UUID] = mapped_column(

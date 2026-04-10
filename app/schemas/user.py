@@ -1,7 +1,9 @@
 from pydantic import BaseModel, EmailStr, field_validator
 from app.models.user import RoleType
+from app.models.event_token import TokenType
 import re
-  
+import uuid
+
 class createUser(BaseModel):
     fullName: str
     email: EmailStr
@@ -52,6 +54,7 @@ class verifyEmail(BaseModel):
 class userLogin(BaseModel):
     email: EmailStr
     password: str
+    
 
 class forgotPassword(BaseModel):
     email: EmailStr
@@ -80,3 +83,11 @@ class ResetPassword(BaseModel):
         if not re.search(r'[0-9]', v):
             raise ValueError('la contraseña debe contener al menos un número')
         return v
+    
+class AddToken(BaseModel):
+    id: int
+    token: TokenType.access
+
+class DeleteToken(BaseModel):
+    id: int
+    token: TokenType.access

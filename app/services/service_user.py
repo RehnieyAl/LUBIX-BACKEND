@@ -1,6 +1,7 @@
 from fastapi import HTTPException
 from app.models.user import Users
-from app.schemas.user import createUser, verifyEmail, userLogin, forgotPassword, ResetPassword
+from app.models.event_token import EventToken
+from app.schemas.user import createUser, verifyEmail, userLogin, forgotPassword, ResetPassword, AddToken, DeleteToken
 from sqlalchemy.orm import Session
 from app.utils.jwt import create_token
 from app.utils.security import hash_password, verify_password
@@ -9,7 +10,7 @@ from app.utils.codes import create_code_and_send_code, verify_code
 def register_user_service(user: createUser, database: Session):
     exists_user = database.query(Users).filter(Users.email == user.email).first()
     if exists_user:
-        raise HTTPException(status_code=409, detail="usuario esta registrado...")
+        raise HTTPException(status_code=409, detail="correo en uso")
     hashed_password = hash_password(user.password)
     new_user = Users(
         fullName = user.fullName,
@@ -67,10 +68,21 @@ def login_user_service(user: userLogin, database: Session):
         "sub": str(search_user.id)
     })
 
+    add_token = EventToken(
+        user_id=search_user.id,
+        token=token,
+        token_type="access",
+        expires_at=None
+    )
+    
+    database.add(add_token)
+    database.commit()
+
     return {
         "message": "Inicio de sesión exitoso",
         "access_token": token,
         "token_type": "bearer",
+        "id": search_user.id,
         "Nombre": search_user.fullName,
         "email": search_user.email,
         "role": search_user.role
@@ -100,3 +112,11 @@ def reset_password_service(user: ResetPassword, database: Session):
     return {
         "message": "Contraseña restablecida correctamente"
     }
+
+def logout_user_service(delete: DeleteToken, database: Session):
+    token_entry = database.query(EventToken).filter(EventToken.token == delete.token).first()
+    if not token_entry:
+        raise HTTPException(status_code=400, detail="Token no encontrado")
+    
+    database.delete(token_entry)
+    database.commit()
